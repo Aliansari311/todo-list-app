@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomuch-Todo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+    <h2>ToMuch<span>.</span>ToDo</h2>
+        <p style="font-size: 13px; color: #999; padding: 0 15px; margin-bottom: 20px;">👋 Hello, {{ username }}!</p>
+
+<a href="/" class="nav-item {{ 'active' if filter_type == 'all' }}">📋 All Tasks
+    <span class="nav-badge">{{ session['tasks']|length }}</span>
+</a>
+<a href="/filter/pending" class="nav-item {{ 'active' if filter_type == 'pending' }}">⏳ Pending
+    <span class="nav-badge">{{ session['tasks']|selectattr('status','equalto','Pending')|list|length }}</span>
+</a>
+<a href="/filter/completed" class="nav-item {{ 'active' if filter_type == 'completed' }}">✅ Completed
+    <span class="nav-badge">{{ session['tasks']|selectattr('status','equalto','Completed')|list|length }}</span>
+</a>
+
+    <a href="/add" class="nav-item">➕ Add Task</a>
+        <a href="/logout" class="nav-item" style="color: #e53e3e; margin-top: 20px;">🚪 Logout</a>
+
+
+</div>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="main-header">
+            <h1>My Tasks</h1>
+            <a href="/add" class="btn-add">+ Add New Task</a>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>{{ tasks|length }}</h3>
+                <p>Total Tasks</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ tasks|selectattr('status','equalto','Pending')|list|length }}</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ tasks|selectattr('status','equalto','Completed')|list|length }}</h3>
+                <p>Completed</p>
+            </div>
+        </div>
+
+        <!-- TASK LIST -->
+        <div class="task-section">
+            <h2>Tasks</h2>
+            {% if tasks %}
+                {% for task in tasks %}
+                <div class="task-item {{ 'completed' if task['status'] == 'Completed' }}">
+                    <a href="/complete/{{ task['id'] }}" class="task-checkbox {{ 'done' if task['status'] == 'Completed' }}">
+                        {{ '✓' if task['status'] == 'Completed' }}
+                    </a>
+                    <div class="task-content">
+                        <h3 class="{{ 'done' if task['status'] == 'Completed' }}">{{ task['title'] }}</h3>
+                        <div class="task-meta">
+                            <span class="tag">{{ task['category'] }}</span>
+                            <span class="tag {{ task['priority'].lower() }}">{{ task['priority'] }}</span>
+                            <span class="task-date">📅 {{ task['deadline'] }}</span>
+                        </div>
+                    </div>
+                    <div class="task-actions">
+    <a href="/edit/{{ task['id'] }}" class="btn-edit">✏️</a>
+   <a href="/delete/{{ task['id'] }}"
+   class="btn-delete"
+   onclick="return confirm('Are you sure you want to delete this task?')">
+   🗑
+</a>
+</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-tasks">No tasks yet! Add a new task. 😊</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

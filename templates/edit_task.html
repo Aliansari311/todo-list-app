@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Any<span>.</span>Do</h2>
+        <a href="/" class="nav-item">📋 All Tasks</a>
+        <a href="/add" class="nav-item">➕ Add Task</a>
+    </div>
+
+    <div class="main">
+        <div class="form-container">
+            <h1>✏️ Edit Task</h1>
+
+            <form method="POST" action="/edit/{{ task['id'] }}">
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" name="title" value="{{ task['title'] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option value="Personal" {{ 'selected' if task['category'] == 'Personal' }}>Personal</option>
+                        <option value="Study" {{ 'selected' if task['category'] == 'Study' }}>Study</option>
+                        <option value="Work" {{ 'selected' if task['category'] == 'Work' }}>Work</option>
+                        <option value="Other" {{ 'selected' if task['category'] == 'Other' }}>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select name="priority">
+                        <option value="High" {{ 'selected' if task['priority'] == 'High' }}>🔴 High</option>
+                        <option value="Medium" {{ 'selected' if task['priority'] == 'Medium' }}>🟡 Medium</option>
+                        <option value="Low" {{ 'selected' if task['priority'] == 'Low' }}>🟢 Low</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Deadline</label>
+                    <input type="date" name="deadline" value="{{ task['deadline'] }}" required>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-add">Save Changes</button>
+                    <a href="/" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

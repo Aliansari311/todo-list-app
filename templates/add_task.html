@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>Any<span>.</span>Do</h2>
+        <a href="/" class="nav-item">📋 All Tasks</a>
+        <a href="/" class="nav-item">⏳ Pending</a>
+        <a href="/" class="nav-item">✅ Completed</a>
+        <a href="/add" class="nav-item active">➕ Add Task</a>
+    </div>
+
+    <div class="main">
+        <div class="form-container">
+            <h1>➕ Add New Task</h1>
+
+            <form method="POST" action="/add">
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" name="title" placeholder="Enter task title..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option value="Personal">Personal</option>
+                        <option value="Study">Study</option>
+                        <option value="Work">Work</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select name="priority">
+                        <option value="High">🔴 High</option>
+                        <option value="Medium">🟡 Medium</option>
+                        <option value="Low">🟢 Low</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Deadline</label>
+                    <input type="date" name="deadline" required>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn-add">Add Task</button>
+                    <a href="/" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
